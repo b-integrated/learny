@@ -17,8 +17,12 @@ class Agent
       user_input = gets.chomp
       break if user_input == "exit"
 
-      response = @chat.ask user_input
+      response = @chat.ask(user_input) do |chunk|
+        print chunk.content
+      end
+      print "\n---Completed Task---"
       puts response.content
+      puts "Total Tokens: #{(response.input_tokens || 0) + (response.output_tokens || 0)}"
     end
   end
 end
