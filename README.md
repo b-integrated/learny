@@ -9,6 +9,7 @@ Learny is a simple Ruby-based AI agent that provides file manipulation capabilit
   - Read files (`read_file`)
   - List files and directories (`list_files`)
   - Edit text files (`edit_file`)
+  - Execute shell commands (`run_shell_command`)
 
 ## Prerequisites
 
@@ -70,6 +71,14 @@ The agent will use the `read_file` tool to display the contents of the specified
 ```
 
 The agent will use the `edit_file` tool to make the requested change. If the file doesn't exist, it will be created.
+
+### Execute Shell Commands
+
+```
+> Run the command ls -la
+```
+
+The agent will use the `run_shell_command` tool to execute the specified shell command and display the output.
 
 ## Project Structure
 
