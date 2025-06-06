@@ -3,6 +3,7 @@ require "ruby_llm"
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV.fetch("ANTHROPIC_API_KEY", nil)
   config.default_model = "claude-3-7-sonnet"
+  config.track_costs = true # Enable cost tracking in RubyLLM
 end
 
 require_relative "src/agent"
@@ -28,4 +29,7 @@ When asked to help with code, you can examine the project structure,
 read existing code files, and make edits or create new files as needed.
 MESSAGE
 
-Agent.new(system_message: system_message).run
+# Parse command line arguments for configuration
+show_cost = ARGV.include?("--show-cost") || ENV["SHOW_COST"] == "true"
+
+Agent.new(system_message: system_message, show_cost: show_cost).run
