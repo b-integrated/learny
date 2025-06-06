@@ -27,10 +27,19 @@ class Agent
       end
       print "\n---Completed Task---"
       puts response.content
-      puts "Total Tokens: #{(response.input_tokens || 0) + (response.output_tokens || 0)}"
       
-      if @show_cost && response.cost
-        puts "Cost: $#{response.cost.round(6)}"
+      input_tokens = response.input_tokens || 0
+      output_tokens = response.output_tokens || 0
+      total_tokens = input_tokens + output_tokens
+      puts "Total Tokens: #{total_tokens}"
+      
+      if @show_cost
+        # Calculate approximate cost based on Claude-3-7-Sonnet pricing
+        # $15 per million input tokens, $75 per million output tokens
+        input_cost = input_tokens * (15.0 / 1_000_000)
+        output_cost = output_tokens * (75.0 / 1_000_000)
+        total_cost = input_cost + output_cost
+        puts "Cost: $#{total_cost.round(6)} (Input: $#{input_cost.round(6)}, Output: $#{output_cost.round(6)})"
       end
     end
   end
