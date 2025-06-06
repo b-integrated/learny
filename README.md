@@ -10,6 +10,8 @@ Learny is a simple Ruby-based AI agent that provides file manipulation capabilit
   - List files and directories (`list_files`)
   - Edit text files (`edit_file`)
   - Execute shell commands (`run_shell_command`)
+  - Create vector embeddings (`create_embeddings`)
+  - Create embeddings from file contents (`embed_file`)
 
 ## Prerequisites
 
@@ -80,6 +82,22 @@ The agent will use the `edit_file` tool to make the requested change. If the fil
 
 The agent will use the `run_shell_command` tool to execute the specified shell command and display the output.
 
+### Create Embeddings
+
+```
+> Create embeddings for the text "Ruby is a beautiful programming language"
+```
+
+The agent will use the `create_embeddings` tool to generate vector embeddings for the specified text, which can be used for semantic search, similarity comparisons, and other AI applications.
+
+### Create Embeddings from Files
+
+```
+> Create embeddings from the file src/agent.rb
+```
+
+The agent will use the `embed_file` tool to read the entire contents of a file and generate vector embeddings from it. This is useful for code similarity analysis, semantic search across files, and building code recommendation systems.
+
 ## Project Structure
 
 - `learny.rb` - Main entry point
@@ -89,6 +107,9 @@ The agent will use the `run_shell_command` tool to execute the specified shell c
   - `read_file.rb` - Tool to read file contents
   - `list_files.rb` - Tool to list files and directories
   - `edit_file.rb` - Tool to edit text files
+  - `run_shell_command.rb` - Tool to execute shell commands
+  - `create_embeddings.rb` - Tool to create vector embeddings
+  - `embed_file.rb` - Tool to create embeddings from file contents
 
 ## Dependencies
 
