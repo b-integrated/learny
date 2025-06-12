@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# ~/bin/learny  – run `learny.rb` from anywhere, respecting asdf versions
+set -euo pipefail
+
+################################################################################
+# 1. Configure where the Ruby source lives
+################################################################################
+# Absolute path to the directory that contains learny.rb **and** .tool-versions
+PROJECT_DIR="/Users/dbomhof/src/learny"
+SCRIPT="learny.rb"
+
+################################################################################
+# 2. Initialise asdf (needed when you invoke from a non-login shell)
+################################################################################
+if [[ -f "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]]; then
+  # shellcheck source=/dev/null
+  . "/opt/homebrew/opt/asdf/libexec/asdf.sh"
+
+else
+  echo "ERROR: asdf not found at /opt/homebrew/opt/asdf/libexec/asdf.sh" >&2
+  exit 1
+fi
+
+################################################################################
+# 3. Run the script under the correct tool versions
+################################################################################
+#   - `pushd/popd` keeps your original working dir intact
+#   - `asdf exec` looks at .tool-versions inside $PROJECT_DIR
+pushd "$PROJECT_DIR" >/dev/null
+asdf install                                   # no-op if versions already present
+exec asdf exec ruby "$SCRIPT" "$@"             # `exec` hands control to Ruby
+
