@@ -6,4 +6,10 @@ RubyLLM.configure do |config|
 end
 
 require_relative "src/agent"
-Agent.new.run
+
+begin
+  Agent.new.run
+rescue => e
+  puts "Error: #{e.message}"
+  puts e.backtrace
+end

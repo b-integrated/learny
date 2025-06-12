@@ -2,6 +2,24 @@
 # ~/bin/learny  – run `learny.rb` from anywhere, respecting asdf versions
 set -euo pipefail
 
+# Check for debug flag
+DEBUG=false
+for arg in "$@"; do
+  if [[ "$arg" == "--debug" ]]; then
+    DEBUG=true
+    break
+  fi
+done
+
+# Function to conditionally echo debug messages
+debug_echo() {
+  if [[ "$DEBUG" == "true" ]]; then
+    echo "$1"
+  fi
+}
+
+debug_echo "Starting learny script..."
+
 ################################################################################
 # 1. Configure where the Ruby source lives
 ################################################################################
@@ -9,13 +27,16 @@ set -euo pipefail
 PROJECT_DIR="/Users/dbomhof/src/learny"
 SCRIPT="learny.rb"
 
+debug_echo "Project directory: $PROJECT_DIR"
+debug_echo "Script: $SCRIPT"
+
 ################################################################################
 # 2. Initialise asdf (needed when you invoke from a non-login shell)
 ################################################################################
 if [[ -f "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]]; then
   # shellcheck source=/dev/null
   . "/opt/homebrew/opt/asdf/libexec/asdf.sh"
-
+  debug_echo "asdf initialized."
 else
   echo "ERROR: asdf not found at /opt/homebrew/opt/asdf/libexec/asdf.sh" >&2
   exit 1
@@ -24,9 +45,14 @@ fi
 ################################################################################
 # 3. Run the script under the correct tool versions
 ################################################################################
-#   - `pushd/popd` keeps your original working dir intact
-#   - `asdf exec` looks at .tool-versions inside $PROJECT_DIR
-pushd "$PROJECT_DIR" >/dev/null
-asdf install                                   # no-op if versions already present
-exec asdf exec ruby "$SCRIPT" "$@"             # `exec` hands control to Ruby
+# Install required versions if needed
+(
+  cd "$PROJECT_DIR"
+  debug_echo "Installing asdf versions in $PROJECT_DIR"
+  asdf install                                   # no-op if versions already present
+)
+
+# Run learny.rb from the current directory
+debug_echo "Running learny.rb from the current directory"
+exec asdf exec ruby "$PROJECT_DIR/$SCRIPT" "$@"
 
