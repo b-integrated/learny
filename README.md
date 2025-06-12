@@ -1,6 +1,7 @@
-# Learny - An AI Agent Tool
+# Learny
 
-Learny is a simple Ruby-based AI agent that provides file manipulation capabilities through a conversational interface powered by Claude AI.
+## Overview
+Learny is a Ruby-based agent that uses AI to interact with your codebase. It can read files, list directories, edit files, and more.
 
 ## Features
 
@@ -20,83 +21,55 @@ Learny is a simple Ruby-based AI agent that provides file manipulation capabilit
 - Anthropic API key
 
 ## Installation
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd learny
+   ```
 
-1. Clone this repository
 2. Install dependencies:
+   ```sh
+   bundle install
+   ```
 
-```bash
-bundle install
-```
-
-3. Set up your Anthropic API key:
-
-```bash
-export ANTHROPIC_API_KEY=your_api_key_here
-```
+3. Set up your environment:
+   - Ensure you have `asdf` installed and configured.
+   - Set the `ANTHROPIC_API_KEY` environment variable.
 
 ## Usage
+### Running Learny
+To run Learny, use the `learny` script located in the `bin` directory. This script can be placed in a directory that is part of your `PATH` for easy access.
 
-Start the agent by running:
+```sh
+# Example: Place the script in a directory in your PATH
+cp bin/learny ~/bin/
 
-```bash
-ruby learny.rb
+# Run Learny from any directory
+learny
 ```
 
-This will launch an interactive chat session where you can communicate with the AI agent.
+### Debug Mode
+You can run Learny in debug mode to see additional output:
 
-Type `exit` to end the session.
-
-## Examples
-
-Here are some examples of commands you can use:
-
-### List Files
-
-```
-> I need a list of all the files in this project
+```sh
+learny --debug
 ```
 
-The agent will use the `list_files` tool to show you all files in the current directory and subdirectories.
+### Example Commands
+- List files in the current directory:
+  ```
+  > Give me a list of the files in this directory
+  ```
 
-### Read a File
+- Read a file:
+  ```
+  > Read the contents of <file-path>
+  ```
 
-```
-> Show me the contents of Gemfile
-```
-
-The agent will use the `read_file` tool to display the contents of the specified file.
-
-### Edit a File
-
-```
-> Edit the file example.txt and replace "Hello" with "Hello World"
-```
-
-The agent will use the `edit_file` tool to make the requested change. If the file doesn't exist, it will be created.
-
-### Execute Shell Commands
-
-```
-> Run the command ls -la
-```
-
-The agent will use the `run_shell_command` tool to execute the specified shell command and display the output.
-
-### Create Embeddings
-
-```
-> Create embeddings for the text "Ruby is a beautiful programming language"
-```
-
-The agent will use the `create_embeddings` tool to generate vector embeddings for the specified text, which can be used for semantic search, similarity comparisons, and other AI applications.
-
-### Create Embeddings from Files
-
-```
-> Create embeddings from the file src/agent.rb
-```
-
-The agent will use the `embed_file` tool to read the entire contents of a file and generate vector embeddings from it. This is useful for code similarity analysis, semantic search across files, and building code recommendation systems.
+- Edit a file:
+  ```
+  > Edit <file-path> to replace <old-text> with <new-text>
+  ```
 
 ## Project Structure
 
@@ -123,3 +96,6 @@ The agent will use the `embed_file` tool to read the entire contents of a file a
 
 - If you encounter an authentication error, make sure your `ANTHROPIC_API_KEY` is set correctly
 - Ensure all dependencies are installed with `bundle install`
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
