@@ -24,9 +24,10 @@ fi
 ################################################################################
 # 3. Run the script under the correct tool versions
 ################################################################################
-#   - `pushd/popd` keeps your original working dir intact
-#   - `asdf exec` looks at .tool-versions inside $PROJECT_DIR
-pushd "$PROJECT_DIR" >/dev/null
+# Install required versions if needed
+cd "$PROJECT_DIR"
 asdf install                                   # no-op if versions already present
-exec asdf exec ruby "$SCRIPT" "$@"             # `exec` hands control to Ruby
+
+# Run learny.rb from the current directory
+exec asdf exec ruby "$PROJECT_DIR/$SCRIPT" "$@"
 
